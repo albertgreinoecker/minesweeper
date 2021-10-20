@@ -1,5 +1,10 @@
 package at.ac.htlinn.minesweeper;
 
+/**
+ * Base class for all fields
+ * @author albert
+ *
+ */
 public abstract class Field {
 	protected boolean flag;
 	protected boolean open;
