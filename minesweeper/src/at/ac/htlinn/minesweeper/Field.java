@@ -22,5 +22,10 @@ public abstract class Field {
 		this.open = open;
 	}
 	
-	
+	@Override
+		public String toString() {
+			if (flag) return "F";
+			if (open) return "O";
+			return "C";
+		}
 }

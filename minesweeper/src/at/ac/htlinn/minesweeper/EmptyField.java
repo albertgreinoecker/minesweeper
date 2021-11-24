@@ -21,7 +21,7 @@ public class EmptyField extends Field {
 	
 	@Override
 	public String toString() {
-		if (bombsCnt == 0) return  "_";
-		return bombsCnt + "";
+		if (bombsCnt == 0) return  "_" +  super.toString();
+		return bombsCnt +  super.toString();
 	}
 }

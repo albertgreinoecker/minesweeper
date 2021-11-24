@@ -1,5 +1,9 @@
 package at.ac.htlinn.minesweeper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Playground {
 	private Field[][] matrix; // (0,0) is top left
 
@@ -7,6 +11,41 @@ public class Playground {
 		init(width, height, bombs);
 	}
 
+	public Playground(int width, int height, File f) throws FileNotFoundException {
+		matrix = new Field[width][height];
+		Scanner s = new Scanner(f);
+		int x = 0;
+		while (s.hasNextLine())
+		{
+			String line = s.nextLine();
+			String parts[] = line.split("\\|");
+			for (int i = 0; i < parts.length;i++) {
+				String part = parts[i];
+				if (part.charAt(0) == '*')
+				{
+					Field field = new BombField();
+					field.setFlag(part.charAt(1) == 'F');
+					field.setOpen(part.charAt(1) == 'O');
+					matrix[x][i] = field;
+				} else
+				{
+					int bombsCnt = 0;
+					if (part.charAt(0) != '_')
+					{
+						bombsCnt = Integer.parseInt(part.charAt(0) + "");
+					}
+					EmptyField field = new EmptyField(bombsCnt);
+					field.setFlag(part.charAt(1) == 'F');
+					field.setOpen(part.charAt(1) == 'O');
+					matrix[x][i] = field;
+				}
+			}
+			x++;
+		}
+		s.close();
+		
+		
+	}
 	public void init(int width, int height, int bombs) {
 		matrix = new Field[width][height];
 		// init matrix with empty fields
@@ -35,6 +74,10 @@ public class Playground {
 
 	}
 
+	public boolean finished()
+	{
+		return false;
+	}
 	/**
 	 * count the number of bombs in the direct neighbourhood of position x,y
 	 */
@@ -107,7 +150,7 @@ public class Playground {
 		String str = "";
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				str += matrix[i][j];
+				str += matrix[i][j] + "|";
 			}
 			str += "\n";
 		}
